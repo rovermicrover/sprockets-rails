@@ -59,6 +59,9 @@ module Sprockets
     rake_tasks do |app|
       require 'sprockets/rails/task'
 
+      ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
+      require File.expand_path(app.root.to_s + "/config/environment")
+
       Sprockets::Rails::Task.new do |t|
         t.environment = lambda { app.assets }
         t.output      = File.join(app.root, 'public', app.config.assets.prefix)
